@@ -6,98 +6,86 @@
 
 <title>Навигация ЗАБИЖТ</title>
 
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0d8f8f">
-
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
 body{
-font-family:Arial,sans-serif;
+margin:0;
+padding:20px;
+font-family:Arial;
 background:linear-gradient(180deg,#022f2f,#0d8f8f,#37d4d4);
-min-height:100vh;
 color:white;
-overflow-y:auto;
 }
 
-.header{
+h1{
 text-align:center;
-padding:30px 20px;
-}
-
-.logo{
-width:150px;
-height:150px;
-border-radius:35px;
-box-shadow:0 0 25px rgba(255,255,255,0.3);
-margin-bottom:20px;
-}
-
-.title{
-font-size:36px;
-font-weight:bold;
-margin-bottom:10px;
+font-size:34px;
 }
 
 .subtitle{
+text-align:center;
+margin-bottom:25px;
 font-size:18px;
-color:#d9ffff;
 }
 
-.container{
-max-width:500px;
-margin:auto;
-padding:20px;
-}
-
-.card{
-background:rgba(255,255,255,0.12);
-backdrop-filter:blur(12px);
-border-radius:30px;
-padding:25px;
-box-shadow:0 0 25px rgba(0,0,0,0.35);
-margin-bottom:40px;
-}
-
-.room-btn{
+.search{
 width:100%;
-padding:22px;
-margin-top:18px;
+padding:18px;
 border:none;
-border-radius:22px;
-background:linear-gradient(90deg,#00dede,#006d6d);
+border-radius:18px;
+font-size:20px;
+margin-bottom:15px;
+}
+
+.search-btn{
+width:100%;
+padding:18px;
+border:none;
+border-radius:18px;
+background:#033c3c;
 color:white;
 font-size:22px;
 font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+margin-bottom:30px;
 }
 
-.room-btn:hover{
-transform:scale(1.03);
-background:linear-gradient(90deg,#59ffff,#009393);
+.map{
+background:white;
+color:black;
+padding:20px;
+border-radius:20px;
+margin-bottom:30px;
 }
 
-.route{
-margin-top:25px;
-padding:22px;
-border-radius:22px;
-background:rgba(0,0,0,0.3);
+.room{
+display:inline-block;
+padding:15px;
+margin:10px;
+background:#0d8f8f;
+color:white;
+border-radius:15px;
+font-weight:bold;
+}
+
+button{
+width:100%;
+padding:20px;
+margin-top:15px;
+border:none;
+border-radius:20px;
+background:#033c3c;
+color:white;
+font-size:22px;
+font-weight:bold;
+}
+
+#route{
+margin-top:30px;
+background:white;
+color:black;
+padding:20px;
+border-radius:20px;
 font-size:18px;
-line-height:1.8;
-display:none;
-}
-
-.footer{
-text-align:center;
-padding:30px;
-font-size:14px;
-color:#d9ffff;
+line-height:1.7;
 }
 
 </style>
@@ -105,100 +93,100 @@ color:#d9ffff;
 
 <body>
 
-<div class="header">
-
-<img src="logo.png" class="logo">
-
-<div class="title">
-Навигация ЗАБИЖТ
-</div>
+<h1>Навигация ЗАБИЖТ</h1>
 
 <div class="subtitle">
-Выберите кабинет для маршрута
+Поиск кабинета и карта этажа
 </div>
 
-</div>
+<input
+type="text"
+id="searchInput"
+class="search"
+placeholder="Введите кабинет например 4.38"
+>
 
-<div class="container">
-
-<div class="card">
-
-<button class="room-btn" onclick="showLocation()">
-📍 Где я?
+<button class="search-btn" onclick="searchRoom()">
+🔍 Найти кабинет
 </button>
 
-<button class="room-btn" onclick="showRoute('433')">
+<div class="map">
+
+<h2>
+🗺 Карта 4 этажа
+</h2>
+
+<div class="room">4.33</div>
+<div class="room">4.34</div>
+<div class="room">4.36</div>
+<div class="room">4.37</div>
+<div class="room">4.38</div>
+<div class="room">🍽 Столовая</div>
+
+</div>
+
+<button onclick="showRoute('433')">
 Кабинет 4.33
 </button>
 
-<button class="room-btn" onclick="showRoute('434')">
+<button onclick="showRoute('434')">
 Кабинет 4.34
 </button>
 
-<button class="room-btn" onclick="showRoute('436')">
+<button onclick="showRoute('436')">
 Кабинет 4.36
 </button>
 
-<button class="room-btn" onclick="showRoute('437')">
+<button onclick="showRoute('437')">
 Кабинет 4.37
 </button>
 
-<button class="room-btn" onclick="showRoute('438')">
+<button onclick="showRoute('438')">
 Кабинет 4.38
 </button>
 
-<button class="room-btn" onclick="showRoute('food')">
+<button onclick="showRoute('food')">
 🍽 Столовая
 </button>
 
-<div class="route" id="routeBox"></div>
-
-</div>
-
-</div>
-
-<div class="footer">
-Лицей ЗАБИЖТ • QR Навигация
+<div id="route">
+Нажмите на кабинет или воспользуйтесь поиском
 </div>
 
 <script>
 
-function showLocation(){
+function searchRoom(){
 
-const box=document.getElementById("routeBox");
+const value =
+document.getElementById("searchInput")
+.value
+.trim();
 
-box.style.display="block";
-
-const params = new URLSearchParams(window.location.search);
-
-const place = params.get("place");
-
-if(place==="floor4"){
-
-box.innerHTML=
-"📍 Вы сейчас на 4 этаже<br><br>\
-Рядом находятся:<br>\
-• Кабинет 4.33<br>\
-• Кабинет 4.34<br>\
-• Кабинет 4.36<br>\
-• Кабинет 4.37<br>\
-• Кабинет 4.38";
-
+if(value==="4.33"){
+showRoute("433");
 }
 
-else if(place==="floor1"){
+else if(value==="4.34"){
+showRoute("434");
+}
 
-box.innerHTML=
-"📍 Вы сейчас на 1 этаже<br><br>\
-Рядом находится столовая.";
+else if(value==="4.36"){
+showRoute("436");
+}
 
+else if(value==="4.37"){
+showRoute("437");
+}
+
+else if(value==="4.38"){
+showRoute("438");
 }
 
 else{
 
-box.innerHTML=
-"📍 Местоположение не определено.<br><br>\
-Отсканируйте QR-код этажа.";
+document.getElementById("route")
+.innerHTML =
+"❌ Кабинет не найден";
 
 }
 
@@ -206,79 +194,68 @@ box.innerHTML=
 
 function showRoute(room){
 
-const box=document.getElementById("routeBox");
-
-box.style.display="block";
+const route =
+document.getElementById("route");
 
 if(room==="433"){
 
-box.innerHTML=
-"📍 Маршрут до кабинета 4.33<br><br>\
-1. Поднимитесь на 4 этаж по главной лестнице.<br>\
-2. После лестницы поверните направо.<br>\
-3. Идите прямо по длинному коридору.<br>\
-4. Кабинет 4.33 будет слева рядом с кабинетом 4.34.";
+route.innerHTML =
+"📍 Маршрут до 4.33<br><br>\
+1. Поднимитесь на 4 этаж.<br>\
+2. Поверните направо.<br>\
+3. Кабинет будет слева.";
 
 }
 
 if(room==="434"){
 
-box.innerHTML=
-"📍 Маршрут до кабинета 4.34<br><br>\
+route.innerHTML =
+"📍 Маршрут до 4.34<br><br>\
 1. Поднимитесь на 4 этаж.<br>\
-2. Поверните направо после лестницы.<br>\
-3. Идите прямо до конца коридора.<br>\
-4. Кабинет 4.34 будет слева.";
+2. Идите прямо по коридору.";
 
 }
 
 if(room==="436"){
 
-box.innerHTML=
-"📍 Маршрут до кабинета 4.36<br><br>\
+route.innerHTML =
+"📍 Маршрут до 4.36<br><br>\
 1. Поднимитесь на 4 этаж.<br>\
-2. Идите прямо от лестницы.<br>\
-3. Пройдите кабинеты 4.33 и 4.34.<br>\
-4. Кабинет 4.36 будет справа.";
+2. Пройдите мимо 4.34.";
 
 }
 
 if(room==="437"){
 
-box.innerHTML=
-"📍 Маршрут до кабинета 4.37<br><br>\
+route.innerHTML =
+"📍 Маршрут до 4.37<br><br>\
 1. Поднимитесь на 4 этаж.<br>\
-2. Поверните направо.<br>\
-3. Двигайтесь прямо по коридору.<br>\
-4. После кабинета 4.36 увидите кабинет 4.37.";
+2. Кабинет справа.";
 
 }
 
 if(room==="438"){
 
-box.innerHTML=
-"📍 Маршрут до кабинета 4.38<br><br>\
+route.innerHTML =
+"📍 Маршрут до 4.38<br><br>\
 1. Поднимитесь на 4 этаж.<br>\
-2. Идите прямо по коридору.<br>\
-4. Табличка 4.38 будет слева.";
+2. Кабинет рядом со столовой.";
 
 }
 
 if(room==="food"){
 
-box.innerHTML=
+route.innerHTML =
 "📍 Маршрут до столовой<br><br>\
 1. Спуститесь на 1 этаж.<br>\
-2. От центрального входа идите прямо.<br>\
-3. Поверните налево по указателю 'Столовая'.<br>\
-4. Столовая находится в конце коридора.";
+2. Идите прямо.";
 
 }
 
-}
+route.scrollIntoView({
+behavior:'smooth'
+});
 
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('sw.js');
 }
 
 </script>
