@@ -2,158 +2,246 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Навигация ЗАБИЖТ</title>
 
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#4CAF50">
+<meta name="theme-color" content="#0d8f8f">
 
 <style>
-body {
-  font-family: Arial;
-  margin: 0;
-  background: linear-gradient(135deg, #4CAF50, #2196F3);
-  color: white;
+
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+    background:linear-gradient(180deg,#032b2b,#0d8f8f,#38cfcf);
+    min-height:100vh;
+    color:white;
+    overflow-y:auto;
 }
 
-header {
-  padding: 20px;
-  text-align: center;
-  font-size: 22px;
-  font-weight: bold;
+.header{
+    text-align:center;
+    padding:30px 20px 10px;
 }
 
-.container {
-  padding: 15px;
+.logo{
+    width:140px;
+    height:140px;
+    border-radius:30px;
+    box-shadow:0 0 20px rgba(255,255,255,0.3);
 }
 
-.card {
-  background: white;
-  color: black;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 15px;
+.title{
+    font-size:34px;
+    font-weight:bold;
+    margin-top:15px;
+    color:white;
 }
 
-h3 {
-  margin-top: 0;
+.subtitle{
+    margin-top:10px;
+    font-size:18px;
+    color:#dfffff;
 }
 
-button {
-  width: 100%;
-  padding: 15px;
-  margin: 6px 0;
-  font-size: 18px;
-  border: none;
-  border-radius: 12px;
-  color: white;
-  cursor: pointer;
+.container{
+    padding:20px;
+    max-width:500px;
+    margin:auto;
 }
 
-/* Цвета кнопок по этажам */
-.floor1 { background: #4CAF50; }
-.floor2 { background: #2196F3; }
-.floor3 { background: #9C27B0; }
-.floor4 { background: #FF9800; }
-
-.special { background: #f44336; }
-
-#result {
-  font-size: 18px;
-  margin-top: 10px;
+.card{
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(10px);
+    border-radius:25px;
+    padding:20px;
+    margin-bottom:20px;
+    box-shadow:0 0 20px rgba(0,0,0,0.3);
 }
+
+.room-btn{
+    width:100%;
+    padding:20px;
+    margin-top:15px;
+    border:none;
+    border-radius:20px;
+    background:linear-gradient(90deg,#00d2d2,#007777);
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.room-btn:hover{
+    transform:scale(1.03);
+    background:linear-gradient(90deg,#38ffff,#009999);
+}
+
+.route{
+    margin-top:20px;
+    padding:20px;
+    border-radius:20px;
+    background:rgba(0,0,0,0.25);
+    font-size:18px;
+    line-height:1.7;
+    display:none;
+}
+
+.footer{
+    text-align:center;
+    padding:30px;
+    color:#dfffff;
+    font-size:14px;
+}
+
 </style>
 </head>
-
 <body>
 
-<header>
-📍 Навигация ЗАБИЖТ
-</header>
+<div class="header">
+
+<img src="logo.png" class="logo">
+
+<div class="title">
+Навигация ЗАБИЖТ
+</div>
+
+<div class="subtitle">
+Выберите кабинет для маршрута
+</div>
+
+</div>
 
 <div class="container">
 
 <div class="card">
-  <h3 id="location">Определение...</h3>
-</div>
 
-<div class="card">
-  <h3>Выберите кабинет:</h3>
+<button class="room-btn" onclick="showRoute('433')">
+Кабинет 4.33
+</button>
 
-  <!-- 1 этаж -->
-  <button class="floor1" onclick="route('101')">1.01</button>
-  <button class="floor1" onclick="route('105')">1.05</button>
+<button class="room-btn" onclick="showRoute('434')">
+Кабинет 4.34
+</button>
 
-  <!-- 2 этаж -->
-  <button class="floor2" onclick="route('215')">2.15</button>
-  <button class="floor2" onclick="route('222')">2.22</button>
+<button class="room-btn" onclick="showRoute('436')">
+Кабинет 4.36
+</button>
 
-  <!-- 3 этаж -->
-  <button class="floor3" onclick="route('317')">3.17</button>
-  <button class="floor3" onclick="route('317a')">3.17а</button>
+<button class="room-btn" onclick="showRoute('437')">
+Кабинет 4.37
+</button>
 
-  <!-- 4 этаж -->
-  <button class="floor4" onclick="route('401')">4.01</button>
-  <button class="floor4" onclick="route('420')">4.20</button>
-  <button class="floor4" onclick="route('433')">4.33</button>
-  <button class="floor4" onclick="route('438')">4.38</button>
+<button class="room-btn" onclick="showRoute('438')">
+Кабинет 4.38
+</button>
 
-  <!-- важные места -->
-  <button class="special" onclick="route('canteen')">🍽 Столовая</button>
-  <button class="special" onclick="route('toilet_m')">🚹 Мужской туалет</button>
-  <button class="special" onclick="route('toilet_f')">🚺 Женский туалет</button>
+<button class="room-btn" onclick="showRoute('food')">
+Столовая
+</button>
+
+<div class="route" id="routeBox"></div>
 
 </div>
 
-<div class="card">
-  <h3>Маршрут:</h3>
-  <div id="result">Выберите пункт</div>
 </div>
 
+<div class="footer">
+Лицей ЗАБИЖТ • QR Навигация
 </div>
 
 <script>
 
-// определение положения (QR)
-const params = new URLSearchParams(window.location.search);
-const place = params.get("place");
+function showRoute(room){
 
-let loc = "📍 Вход (1 этаж)";
-if (place === "floor2") loc = "📍 2 этаж";
-if (place === "floor3") loc = "📍 3 этаж";
-if (place === "floor4") loc = "📍 4 этаж";
+const box=document.getElementById("routeBox");
 
-document.getElementById("location").innerText = loc;
+box.style.display="block";
 
-// маршруты
-function route(room) {
+if(room==="433"){
+box.innerHTML=
+"📍 Маршрут до 4.33<
 
-let t = "";
+1. Поднимитесь на 4 этаж по главной лестнице.<
 
-if (room === "101") t = "Идите прямо → кабинет слева";
-if (room === "105") t = "Идите прямо → направо";
+2. После лестницы поверните направо.<
 
-if (room === "215") t = "Поднимитесь на 2 этаж → направо";
-if (room === "222") t = "Поднимитесь на 2 этаж → налево";
+3. Идите прямо до конца коридора.<
 
-if (room === "317") t = "Поднимитесь на 3 этаж → налево";
-if (room === "317a") t = "Поднимитесь на 3 этаж → направо";
-
-if (room === "401") t = "Поднимитесь на 4 этаж → налево";
-if (room === "420") t = "Поднимитесь на 4 этаж → конец коридора";
-if (room === "433") t = "Поднимитесь на 4 этаж → середина коридора";
-if (room === "438") t = "Поднимитесь на 4 этаж → конец коридора";
-
-if (room === "canteen") t = "Спуститесь на 1 этаж → направо → столовая";
-
-if (room === "toilet_m") t = "4 этаж → направо → 🚹";
-if (room === "toilet_f") t = "4 этаж → направо → 🚺";
-
-document.getElementById("result").innerText = t;
+4. Кабинет 4.33 будет слева рядом с 4.34.";
 }
 
-// service worker
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('sw.js');
+if(room==="434"){
+box.innerHTML=
+"📍 Маршрут до 4.34<b
+
+1. Поднимитесь на 4 этаж.<b
+2. Поверните направо после лестницы.<b
+3. Идите прямо по длинному коридору.<b
+4. Кабинет 4.34 находится слева.";
+}
+
+if(room==="436"){
+box.innerHTML=
+"📍 Маршрут до 4.36<br
+
+. Поднимитесь на 4 этаж.<br
+. Идите прямо от лестницы.<br
+. Пройдите мимо кабинетов 4.33 и 4.34.<br
+. Кабинет 4.36 будет справа.";
+}
+
+if(room==="437"){
+box.innerHTML=
+"📍 Маршрут до 4.37
+
+ Поднимитесь на 4 этаж.
+
+ Поверните направо.
+
+ Двигайтесь прямо по коридору.
+
+ После кабинета 4.36 увидите кабинет 4.37.";
+}
+
+if(room==="438"){
+box.innerHTML=
+"📍 Маршрут до 4.38
+<
+
+Поднимитесь на 4 этаж.
+\
+Идите по коридору прямо.
+\
+Кабинет находится рядом с зоной столовой.
+\
+Табличка 4.38 будет слева.";
+}
+
+if(room==="food"){
+box.innerHTML=
+"📍 Маршрут до столовой
+<b
+
+пуститесь на 1 этаж.
+\
+
+т центрального входа идите прямо.
+\
+
+оверните налево по указателю 'Столовая'.
+\
+
+толовая находится в конце коридора.";
+}
+
+}
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('sw.js');
 }
 
 </script>
