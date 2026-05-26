@@ -417,12 +417,20 @@ onclick="searchRoom()"
 🔍 Найти кабинет
 </button>
 
+<button onclick="showRoute('432')">
+4.32 — Учительская
+</button>
+
 <button onclick="showRoute('433')">
 4.33
 </button>
 
 <button onclick="showRoute('434')">
 4.34
+</button>
+
+<button onclick="showRoute('436a')">
+4.36А — Директор
 </button>
 
 <button onclick="showRoute('436')">
@@ -468,6 +476,10 @@ class="route"
 4.36
 </div>
 
+<div class="room">
+4.36А — Директор
+</div>
+
 <div class="stairs">
 🪜 Правая лестница
 </div>
@@ -482,6 +494,10 @@ class="route"
 
 <div class="room">
 4.33
+</div>
+
+<div class="room">
+4.32 — Учительская
 </div>
 
 </div>
@@ -529,13 +545,17 @@ document.body.classList.toggle("dark");
 function searchRoom(){
 
 const value =
-
 document
 .getElementById("searchInput")
 .value
-.trim();
+.trim()
+.toLowerCase();
 
-if(value==="4.33"){
+if(value==="4.32"){
+showRoute("432");
+}
+
+else if(value==="4.33"){
 showRoute("433");
 }
 
@@ -545,6 +565,10 @@ showRoute("434");
 
 else if(value==="4.36"){
 showRoute("436");
+}
+
+else if(value==="4.36а" || value==="4.36a"){
+showRoute("436a");
 }
 
 else if(value==="4.37"){
@@ -570,6 +594,26 @@ function showRoute(room){
 
 const route =
 document.getElementById("route");
+
+if(room==="432"){
+
+route.innerHTML =
+
+"<h2>📍 Кабинет 4.32 — Учительская</h2>" +
+
+"<div class='step'>1️⃣ Войдите в здание ЗАБИЖТ</div>" +
+
+"<div class='step'>2️⃣ Поднимитесь по правой лестнице на 4 этаж</div>" +
+
+"<div class='step'>3️⃣ После лестницы идите прямо</div>" +
+
+"<div class='step'>4️⃣ Пройдите кабинет 4.34 и 4.33</div>" +
+
+"<div class='step'>5️⃣ Кабинет 4.32 находится позади кабинета 4.33</div>" +
+
+"<div class='step'>✅ Вы пришли в учительскую</div>";
+
+}
 
 if(room==="433"){
 
@@ -611,6 +655,28 @@ route.innerHTML =
 
 }
 
+if(room==="436a"){
+
+route.innerHTML =
+
+"<h2>📍 Кабинет 4.36А — Директор</h2>" +
+
+"<div class='step'>1️⃣ Войдите в здание колледжа</div>" +
+
+"<div class='step'>2️⃣ Используйте правую лестницу</div>" +
+
+"<div class='step'>3️⃣ Поднимитесь на 4 этаж</div>" +
+
+"<div class='step'>4️⃣ Идите прямо по коридору</div>" +
+
+"<div class='step'>5️⃣ Пройдите кабинеты 4.33 и 4.34</div>" +
+
+"<div class='step'>6️⃣ Кабинет директора 4.36А находится за кабинетом 4.36</div>" +
+
+"<div class='step'>✅ Вы пришли к директору</div>";
+
+}
+
 if(room==="436"){
 
 route.innerHTML =
@@ -627,7 +693,7 @@ route.innerHTML =
 
 "<div class='step'>5️⃣ Пройдите кабинеты 4.33 и 4.34</div>" +
 
-"<div class='step'>6️⃣ Кабинет 4.36 будет дальше по коридору</div>" +
+"<div class='step'>6️⃣ Кабинет 4.36 расположен перед кабинетом 4.36А</div>" +
 
 "<div class='step'>✅ Маршрут завершён</div>";
 
@@ -669,7 +735,7 @@ route.innerHTML =
 
 "<div class='step'>4️⃣ После лестницы продолжайте идти прямо</div>" +
 
-"<div class='step'>5️⃣ Пройдите кабинеты 4.33, 4.34, 4.36 и 4.37</div>" +
+"<div class='step'>5️⃣ Пройдите кабинеты 4.33, 4.34, 4.36, 4.36А и 4.37</div>" +
 
 "<div class='step'>6️⃣ Последний кабинет в ряду — 4.38</div>" +
 
