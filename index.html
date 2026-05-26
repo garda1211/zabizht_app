@@ -287,11 +287,89 @@ text-align:center;
 
 font-size:16px;
 
+cursor:pointer;
+
 }
 
 .footer-space{
 
-height:90px;
+height:100px;
+
+}
+
+#mapPage{
+
+display:none;
+
+margin-top:30px;
+
+}
+
+.map-card{
+
+background:white;
+
+color:black;
+
+padding:20px;
+
+border-radius:25px;
+
+}
+
+.room{
+
+background:#0d8f8f;
+
+color:white;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:10px;
+
+text-align:center;
+
+font-weight:bold;
+
+font-size:20px;
+
+}
+
+.stairs{
+
+background:#444;
+
+color:white;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:18px;
+
+}
+
+.door{
+
+background:#ff9800;
+
+color:white;
+
+padding:15px;
+
+border-radius:15px;
+
+margin-top:20px;
+
+text-align:center;
+
+font-size:18px;
 
 }
 
@@ -370,21 +448,70 @@ class="route"
 Выберите кабинет
 </div>
 
+<div id="mapPage">
+
+<div class="map-card">
+
+<h2 style="text-align:center;">
+🗺 Карта 4 этажа
+</h2>
+
+<div class="room">
+4.38
+</div>
+
+<div class="room">
+4.37
+</div>
+
+<div class="room">
+4.36
+</div>
+
+<div class="stairs">
+🪜 Правая лестница
+</div>
+
+<div class="door">
+🚪 Дверь
+</div>
+
+<div class="room">
+4.34
+</div>
+
+<div class="room">
+4.33
+</div>
+
+</div>
+
+</div>
+
 <div class="footer-space"></div>
 
 <div class="bottom-menu">
 
-<div class="menu-item">
+<div
+class="menu-item"
+onclick="showHome()"
+>
 🏠<br>
 Главная
 </div>
 
-<div class="menu-item">
-🔍<br>
-Поиск
+<div
+class="menu-item"
+onclick="showMap()"
+>
+🗺<br>
+Карта
 </div>
 
-<div class="menu-item">
+<div
+class="menu-item"
+onclick="showInfo()"
+>
 ℹ️<br>
 О приложении
 </div>
@@ -442,9 +569,7 @@ document
 function showRoute(room){
 
 const route =
-
-document
-.getElementById("route");
+document.getElementById("route");
 
 if(room==="433"){
 
@@ -452,11 +577,17 @@ route.innerHTML =
 
 "<h2>📍 Кабинет 4.33</h2>" +
 
-"<div class='step'>1️⃣ Поднимитесь по правой лестнице на 4 этаж</div>" +
+"<div class='step'>1️⃣ Войдите в здание ЗАБИЖТ</div>" +
 
-"<div class='step'>2️⃣ После лестницы идите прямо</div>" +
+"<div class='step'>2️⃣ Найдите правую лестницу</div>" +
 
-"<div class='step'>3️⃣ Кабинет будет слева</div>";
+"<div class='step'>3️⃣ Поднимитесь по правой лестнице на 4 этаж</div>" +
+
+"<div class='step'>4️⃣ После подъёма идите прямо по коридору</div>" +
+
+"<div class='step'>5️⃣ Слева будет дверь кабинета 4.33</div>" +
+
+"<div class='step'>✅ Вы пришли</div>";
 
 }
 
@@ -466,11 +597,17 @@ route.innerHTML =
 
 "<h2>📍 Кабинет 4.34</h2>" +
 
-"<div class='step'>1️⃣ Поднимитесь на 4 этаж</div>" +
+"<div class='step'>1️⃣ Войдите в колледж</div>" +
 
-"<div class='step'>2️⃣ Идите прямо</div>" +
+"<div class='step'>2️⃣ Используйте правую лестницу</div>" +
 
-"<div class='step'>3️⃣ Кабинет рядом с 4.33</div>";
+"<div class='step'>3️⃣ Поднимитесь на 4 этаж</div>" +
+
+"<div class='step'>4️⃣ После лестницы идите прямо</div>" +
+
+"<div class='step'>5️⃣ Кабинет 4.34 находится рядом с 4.33</div>" +
+
+"<div class='step'>✅ Вы прибыли к кабинету</div>";
 
 }
 
@@ -480,13 +617,19 @@ route.innerHTML =
 
 "<h2>📍 Кабинет 4.36</h2>" +
 
-"<div class='step'>1️⃣ Поднимитесь на 4 этаж</div>" +
+"<div class='step'>1️⃣ Войдите в здание ЗАБИЖТ</div>" +
 
-"<div class='step'>2️⃣ Идите прямо по коридору</div>" +
+"<div class='step'>2️⃣ Найдите правую лестницу</div>" +
 
-"<div class='step'>3️⃣ Пройдите 4.33 и 4.34</div>" +
+"<div class='step'>3️⃣ Поднимитесь на 4 этаж</div>" +
 
-"<div class='step'>4️⃣ Кабинет дальше по коридору</div>";
+"<div class='step'>4️⃣ После подъёма двигайтесь прямо по коридору</div>" +
+
+"<div class='step'>5️⃣ Пройдите кабинеты 4.33 и 4.34</div>" +
+
+"<div class='step'>6️⃣ Кабинет 4.36 будет дальше по коридору</div>" +
+
+"<div class='step'>✅ Маршрут завершён</div>";
 
 }
 
@@ -496,11 +639,19 @@ route.innerHTML =
 
 "<h2>📍 Кабинет 4.37</h2>" +
 
-"<div class='step'>1️⃣ Поднимитесь на 4 этаж</div>" +
+"<div class='step'>1️⃣ Войдите в колледж</div>" +
 
-"<div class='step'>2️⃣ Идите прямо</div>" +
+"<div class='step'>2️⃣ Поднимитесь по правой лестнице</div>" +
 
-"<div class='step'>3️⃣ Кабинет после 4.36</div>";
+"<div class='step'>3️⃣ Дойдите до 4 этажа</div>" +
+
+"<div class='step'>4️⃣ Идите прямо по длинному коридору</div>" +
+
+"<div class='step'>5️⃣ Пройдите кабинет 4.36</div>" +
+
+"<div class='step'>6️⃣ Кабинет 4.37 будет следующим</div>" +
+
+"<div class='step'>✅ Вы на месте</div>";
 
 }
 
@@ -510,11 +661,19 @@ route.innerHTML =
 
 "<h2>📍 Кабинет 4.38</h2>" +
 
-"<div class='step'>1️⃣ Поднимитесь на 4 этаж</div>" +
+"<div class='step'>1️⃣ Войдите в здание</div>" +
 
-"<div class='step'>2️⃣ Идите прямо по коридору</div>" +
+"<div class='step'>2️⃣ Используйте правую лестницу для подъёма</div>" +
 
-"<div class='step'>3️⃣ Кабинет последний в ряду</div>";
+"<div class='step'>3️⃣ Поднимитесь на 4 этаж</div>" +
+
+"<div class='step'>4️⃣ После лестницы продолжайте идти прямо</div>" +
+
+"<div class='step'>5️⃣ Пройдите кабинеты 4.33, 4.34, 4.36 и 4.37</div>" +
+
+"<div class='step'>6️⃣ Последний кабинет в ряду — 4.38</div>" +
+
+"<div class='step'>✅ Маршрут завершён</div>";
 
 }
 
@@ -524,11 +683,19 @@ route.innerHTML =
 
 "<h2>🍽 Столовая</h2>" +
 
-"<div class='step'>1️⃣ Спуститесь на 1 этаж</div>" +
+"<div class='step'>1️⃣ Войдите в здание ЗАБИЖТ</div>" +
 
-"<div class='step'>2️⃣ Идите прямо</div>" +
+"<div class='step'>2️⃣ Спуститесь или пройдите на 1 этаж</div>" +
 
-"<div class='step'>3️⃣ Поверните налево</div>";
+"<div class='step'>3️⃣ Двигайтесь прямо по коридору</div>" +
+
+"<div class='step'>4️⃣ Поверните налево</div>" +
+
+"<div class='step'>5️⃣ Продолжайте идти прямо</div>" +
+
+"<div class='step'>6️⃣ Впереди будет столовая</div>" +
+
+"<div class='step'>✅ Вы пришли в столовую</div>";
 
 }
 
@@ -537,6 +704,44 @@ route.scrollIntoView({
 behavior:'smooth'
 
 });
+
+}
+
+function showMap(){
+
+document
+.getElementById("mapPage")
+.style.display = "block";
+
+window.scrollTo({
+
+top:document.body.scrollHeight,
+behavior:'smooth'
+
+});
+
+}
+
+function showHome(){
+
+document
+.getElementById("mapPage")
+.style.display = "none";
+
+window.scrollTo({
+
+top:0,
+behavior:'smooth'
+
+});
+
+}
+
+function showInfo(){
+
+alert(
+"Навигация ЗАБИЖТ\nВерсия 1.0\nСоздано для индивидуального проекта"
+);
 
 }
 
