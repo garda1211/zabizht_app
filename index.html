@@ -11,94 +11,98 @@
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
 body{
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
-    background:linear-gradient(180deg,#032b2b,#0d8f8f,#38cfcf);
-    min-height:100vh;
-    color:white;
-    overflow-y:auto;
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#022f2f,#0d8f8f,#37d4d4);
+min-height:100vh;
+color:white;
+overflow-y:auto;
 }
 
 .header{
-    text-align:center;
-    padding:30px 20px 10px;
+text-align:center;
+padding:30px 20px;
 }
 
 .logo{
-    width:140px;
-    height:140px;
-    border-radius:30px;
-    box-shadow:0 0 20px rgba(255,255,255,0.3);
+width:150px;
+height:150px;
+border-radius:35px;
+box-shadow:0 0 25px rgba(255,255,255,0.3);
+margin-bottom:20px;
 }
 
 .title{
-    font-size:34px;
-    font-weight:bold;
-    margin-top:15px;
-    color:white;
+font-size:36px;
+font-weight:bold;
+margin-bottom:10px;
 }
 
 .subtitle{
-    margin-top:10px;
-    font-size:18px;
-    color:#dfffff;
+font-size:18px;
+color:#d9ffff;
 }
 
 .container{
-    padding:20px;
-    max-width:500px;
-    margin:auto;
+max-width:500px;
+margin:auto;
+padding:20px;
 }
 
 .card{
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(10px);
-    border-radius:25px;
-    padding:20px;
-    margin-bottom:20px;
-    box-shadow:0 0 20px rgba(0,0,0,0.3);
+background:rgba(255,255,255,0.12);
+backdrop-filter:blur(12px);
+border-radius:30px;
+padding:25px;
+box-shadow:0 0 25px rgba(0,0,0,0.35);
+margin-bottom:40px;
 }
 
 .room-btn{
-    width:100%;
-    padding:20px;
-    margin-top:15px;
-    border:none;
-    border-radius:20px;
-    background:linear-gradient(90deg,#00d2d2,#007777);
-    color:white;
-    font-size:22px;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
+width:100%;
+padding:22px;
+margin-top:18px;
+border:none;
+border-radius:22px;
+background:linear-gradient(90deg,#00dede,#006d6d);
+color:white;
+font-size:22px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
 }
 
 .room-btn:hover{
-    transform:scale(1.03);
-    background:linear-gradient(90deg,#38ffff,#009999);
+transform:scale(1.03);
+background:linear-gradient(90deg,#59ffff,#009393);
 }
 
 .route{
-    margin-top:20px;
-    padding:20px;
-    border-radius:20px;
-    background:rgba(0,0,0,0.25);
-    font-size:18px;
-    line-height:1.7;
-    display:none;
+margin-top:25px;
+padding:22px;
+border-radius:22px;
+background:rgba(0,0,0,0.3);
+font-size:18px;
+line-height:1.8;
+display:none;
 }
 
 .footer{
-    text-align:center;
-    padding:30px;
-    color:#dfffff;
-    font-size:14px;
+text-align:center;
+padding:30px;
+font-size:14px;
+color:#d9ffff;
 }
 
 </style>
 </head>
+
 <body>
 
 <div class="header">
@@ -118,6 +122,10 @@ body{
 <div class="container">
 
 <div class="card">
+
+<button class="room-btn" onclick="showLocation()">
+📍 Где я?
+</button>
 
 <button class="room-btn" onclick="showRoute('433')">
 Кабинет 4.33
@@ -140,7 +148,7 @@ body{
 </button>
 
 <button class="room-btn" onclick="showRoute('food')">
-Столовая
+🍽 Столовая
 </button>
 
 <div class="route" id="routeBox"></div>
@@ -155,6 +163,51 @@ body{
 
 <script>
 
+function showLocation(){
+
+const box=document.getElementById("routeBox");
+
+box.style.display="block";
+
+const params = new URLSearchParams(window.location.search);
+
+const place = params.get("place");
+
+if(place==="floor4"){
+
+box.innerHTML=
+"📍 Вы сейчас на 4 этаже<br
+
+ядом находятся:<br
+ Кабинет 4.33<br
+ Кабинет 4.34<br
+ Кабинет 4.36<br
+ Кабинет 4.37<br
+ Кабинет 4.38";
+
+}
+
+else if(place==="floor1"){
+
+box.innerHTML=
+"📍 Вы сейчас на 1 этаже
+
+дом находится столовая.";
+
+}
+
+else{
+
+box.innerHTML=
+"📍 Местоположение не определено.
+<
+
+канируйте QR-код этажа.";
+
+}
+
+}
+
 function showRoute(room){
 
 const box=document.getElementById("routeBox");
@@ -162,80 +215,120 @@ const box=document.getElementById("routeBox");
 box.style.display="block";
 
 if(room==="433"){
+
 box.innerHTML=
-"📍 Маршрут до 4.33<
+"📍 Маршрут до кабинета 4.33
+<b
 
-1. Поднимитесь на 4 этаж по главной лестнице.<
+однимитесь на 4 этаж по главной лестнице.
+\
 
-2. После лестницы поверните направо.<
+осле лестницы поверните направо.
+\
 
-3. Идите прямо до конца коридора.<
+дите прямо по длинному коридору.
+\
 
-4. Кабинет 4.33 будет слева рядом с 4.34.";
+абинет 4.33 будет слева рядом с кабинетом 4.34.";
+
 }
 
 if(room==="434"){
-box.innerHTML=
-"📍 Маршрут до 4.34<b
 
-1. Поднимитесь на 4 этаж.<b
-2. Поверните направо после лестницы.<b
-3. Идите прямо по длинному коридору.<b
-4. Кабинет 4.34 находится слева.";
+box.innerHTML=
+"📍 Маршрут до кабинета 4.34
+<br
+
+днимитесь на 4 этаж.
+\
+2
+верните направо после лестницы.
+\
+3
+ите прямо до конца коридора.
+\
+4
+бинет 4.34 будет слева.";
+
 }
 
 if(room==="436"){
-box.innerHTML=
-"📍 Маршрут до 4.36<br
 
-. Поднимитесь на 4 этаж.<br
-. Идите прямо от лестницы.<br
-. Пройдите мимо кабинетов 4.33 и 4.34.<br
-. Кабинет 4.36 будет справа.";
+box.innerHTML=
+"📍 Маршрут до кабинета 4.36
+
+нимитесь на 4 этаж.
+\
+2.
+те прямо от лестницы.
+\
+3.
+йдите кабинеты 4.33 и 4.34.
+\
+4.
+инет 4.36 будет справа.";
+
 }
 
 if(room==="437"){
+
 box.innerHTML=
-"📍 Маршрут до 4.37
+"📍 Маршрут до кабинета 4.37
 
- Поднимитесь на 4 этаж.
+\
 
- Поверните направо.
+имитесь на 4 этаж.
+\
+2. 
+рните направо.
+\
+3. 
+айтесь прямо по коридору.
+\
+4. 
+е кабинета 4.36 увидите кабинет 4.37.";
 
- Двигайтесь прямо по коридору.
-
- После кабинета 4.36 увидите кабинет 4.37.";
 }
 
 if(room==="438"){
-box.innerHTML=
-"📍 Маршрут до 4.38
-<
 
-Поднимитесь на 4 этаж.
+box.innerHTML=
+"📍 Маршрут до кабинета 4.38
+
 \
-Идите по коридору прямо.
+
+митесь на 4 этаж.
 \
-Кабинет находится рядом с зоной столовой.
+2. И
+ прямо по коридору.
 \
-Табличка 4.38 будет слева.";
+3. К
+ет находится рядом со столовой.
+\
+4. Точка 4.38
+    дет слева.";
+
 }
 
 if(room==="food"){
+
 box.innerHTML=
 "📍 Маршрут до столовой
-<b
 
-пуститесь на 1 этаж.
 \
+1
 
-т центрального входа идите прямо.
+тесь на 1 этаж.
 \
-
-оверните налево по указателю 'Столовая'.
+2. От
+трального входа идите прямо.
 \
+3. По
+ите налево по указателю 'Столовая'.
+\
+4. Ст
+ая находится в конце коридора.";
 
-толовая находится в конце коридора.";
 }
 
 }
@@ -247,4 +340,4 @@ navigator.serviceWorker.register('sw.js');
 </script>
 
 </body>
-</html>
+</html> бу
